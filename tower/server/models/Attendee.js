@@ -6,7 +6,7 @@ export const AttendeeSchema = new Schema({
   accountId: { type: Schema.Types.ObjectId, ref: 'Profile', required: true }
 }, { timestamps: true, toJSON: { virtuals: true } })
 
-AttendeeSchema.virtual('towerEvent', {
+AttendeeSchema.virtual('event', {
   localField: 'eventId',
   foreignField: '_id',
   justOne: true,

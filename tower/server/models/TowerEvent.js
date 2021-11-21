@@ -6,7 +6,7 @@ export const TowerEventSchema = new Schema({
   description: { type: String, default: 'no description provided' },
   coverImg: { type: String, default: 'no coverImg provided' },
   location: { type: String, required: true },
-  capacity: { type: Number, required: true },
+  capacity: { type: Number, default: 1 },
   startDate: { type: Date, default: 'To Be Determined' },
   isCanceled: { type: Boolean, default: false },
   type: { type: String, enum: ['concert', 'convention', 'sport', 'digital'] },
