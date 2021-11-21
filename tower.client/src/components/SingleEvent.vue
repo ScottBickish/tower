@@ -1,28 +1,49 @@
 <template>
-  <div class="selectable card elevation-2">
-    <img class="img-fluid" :src="event.coverImg" alt="" />
-    <h3>{{ event.title }}</h3>
-    <h5>{{ event.startDate }}</h5>
-    <h5>{{ event.location }}</h5>
-    <div v-if="event.isCanceled">
-      <h6 class="">This event is canceled</h6>
+  <router-link
+    :to="{ name: 'EventDetailsPage', params: { id: activeEvent.id } }"
+  >
+    <div class="selectable card elevation-2 my-2" @click="setActive()">
+      <img class="img-fluid fix" :src="event.coverImg" alt="" />
+      <h3>{{ event.name }}</h3>
+      <h5>Event type: {{ event.type }}</h5>
+      <h5>{{ new Date(event.startDate).toDateString() }}</h5>
+      <h5>{{ event.location }}</h5>
+      <p>{{ event.capacity }}</p>
+      <p>{{ event.description }}</p>
+      <div v-if="event.isCanceled">
+        <h6 class="cancel">This event is canceled</h6>
+      </div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 
 <script>
+import { computed } from "@vue/reactivity"
+import { AppState } from "../AppState"
 export default {
   props: {
     event: Object,
 
   },
-  setup() {
-    return {}
+  setup(props) {
+    return {
+      activeEvent: computed(() => AppState.activeEvent),
+      setActive() {
+        AppState.activeEvent = props.event
+      }
+    }
   }
 }
 </script>
 
 
 <style lang="scss" scoped>
+.fix {
+  height: 200px;
+  width: 380px;
+}
+.cancel {
+  color: red;
+}
 </style>

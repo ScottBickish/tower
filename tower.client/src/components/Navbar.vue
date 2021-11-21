@@ -78,14 +78,20 @@
               <i class="mdi mdi-logout"></i>
               logout
             </div>
+            <button
+              v-if="account.id"
+              class="btn-btn rounded bg-success"
+              data-bs-toggle="modal"
+              data-bs-target="#EventForm"
+              title="form"
+            >
+              Create
+            </button>
           </div>
         </div>
       </span>
     </div>
   </nav>
-  <button data-bs-toggle="modal" data-bs-target="#EventForm" title="form">
-    Create
-  </button>
   <Modal id="EventForm">
     <template #modal-title> Make an Event! </template>
 
@@ -100,6 +106,7 @@ import { computed } from 'vue'
 export default {
   setup() {
     return {
+      account: computed(() => AppState.account),
       user: computed(() => AppState.user),
       async login() {
         AuthService.loginWithPopup()
