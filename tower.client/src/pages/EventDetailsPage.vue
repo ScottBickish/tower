@@ -130,7 +130,6 @@ export default {
       },
       attendees: computed(() => AppState.attendees),
       async createComment() {
-        logger.log(comment.value)
         await commentsService.createComment(comment.value)
         comment.value = {}
       },
