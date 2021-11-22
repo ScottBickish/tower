@@ -26,16 +26,16 @@
           </router-link>
         </li>
       </ul>
+      <button
+        v-if="account.id"
+        class="btn-btn rounded bg-success me-5"
+        data-bs-toggle="modal"
+        data-bs-target="#EventForm"
+        title="form"
+      >
+        Create New Event
+      </button>
       <span class="navbar-text">
-        <button
-          v-if="account.id"
-          class="btn-btn rounded bg-success"
-          data-bs-toggle="modal"
-          data-bs-target="#EventForm"
-          title="form"
-        >
-          Create
-        </button>
         <button
           class="
             btn
