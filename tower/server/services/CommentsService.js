@@ -7,11 +7,6 @@ class CommentsService {
     return newComment.populate('creator')
   }
 
-  async isAttending(eventId, boolean) {
-    const update = { isAttending: boolean }
-    await dbContext.Comment.findByIdAndUpdate({ eventId: eventId }, update)
-  }
-
   async getCommentsByEvent(id) {
     const foundComment = await dbContext.Comment.find({ eventId: id }).populate('creator')
     if (!foundComment) {

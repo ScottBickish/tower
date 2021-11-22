@@ -3,6 +3,8 @@
     <div class="selectable card elevation-2 my-2" @click="setActive()">
       <img class="img-fluid fix" :src="event.coverImg" alt="" />
       <h3>{{ event.name }}</h3>
+      <p v-if="alreadyAttending" class="color">You're attending this event!</p>
+
       <h5>Event type: {{ event.type }}</h5>
       <h5>{{ new Date(event.startDate).toDateString() }}</h5>
       <h5>{{ event.location }}</h5>
@@ -26,6 +28,7 @@ export default {
   },
   setup(props) {
     return {
+      alreadyAttending: computed(() => AppState.alreadyAttending),
       activeEvent: computed(() => AppState.activeEvent),
       setActive() {
         AppState.activeEvent = props.event
@@ -43,5 +46,8 @@ export default {
 }
 .cancel {
   color: red;
+}
+.color {
+  color: purple;
 }
 </style>

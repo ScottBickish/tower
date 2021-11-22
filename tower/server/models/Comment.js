@@ -4,8 +4,8 @@ const Schema = mongoose.Schema
 export const CommentSchema = new Schema({
   eventId: { type: Schema.Types.ObjectId, ref: 'TowerEvent', required: true },
   creatorId: { type: Schema.Types.ObjectId, ref: 'Account', required: true },
-  body: { type: String },
-  isAttending: { type: Boolean, default: false }
+  body: { type: String }
+
 }, { timestamps: true, toJSON: { virtuals: true } })
 
 CommentSchema.virtual('creator', {

@@ -17,6 +17,16 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-1" v-for="attendee in attendees" :key="attendee.id">
+      <img
+        class="pic"
+        :src="attendee.account.picture"
+        alt="picture"
+        :title="attendee.account.name"
+      />
+    </div>
+  </div>
   <div class="text-end m-3">
     <button
       class="bg-danger rounded"
@@ -25,7 +35,15 @@
     >
       Cancel Event
     </button>
-    <button class="bg-warning rounded ms-3" v-if="!activeEvent.isCanceled">
+    <button
+      class="bg-warning rounded ms-3"
+      v-if="
+        !activeEvent.isCanceled &&
+        activeEvent.capacity >= 1 &&
+        alreadyAttending == false
+      "
+      @click="attendThisEvent(account.id, activeEvent.id)"
+    >
       Attend
     </button>
   </div>
@@ -57,15 +75,20 @@ import Pop from "../utils/Pop"
 import { useRoute } from "vue-router"
 import { eventsService } from "../services/EventsService"
 import { commentsService } from "../services/CommentsService"
+import { attendeesService } from "../services/AttendeesService"
 export default {
   setup() {
     const route = useRoute()
     const comment = ref({ eventId: route.params.id })
+
     onMounted(async () => {
       try {
+        if (AppState.attendees.forEach(a => a.account.id == AppState.account.id)) alreadyAttending = !alreadyAttending
         if (route.params.id) {
+          await attendeesService.getEventAttendees(route.params.id)
           await commentsService.getEventComments(route.params.id)
           await eventsService.getActiveEvent(route.params.id)
+
         }
 
       } catch (error) {
@@ -73,8 +96,23 @@ export default {
         Pop.toast(error)
       }
     })
+    // alreadyAttending() {
+    //   if (AppState.attendees.forEach(a => a.account.id == AppState.account.id)) {
+    //     alreadyAttending = !alreadyAttending
+    //   }
+
+    // }
     return {
 
+      async attendThisEvent(accountId, eventId) {
+        try {
+          await attendeesService.attendThisEvent(accountId, eventId)
+        } catch (error) {
+          logger.error(error)
+          Pop.toast(error)
+        }
+      },
+      attendees: computed(() => AppState.attendees),
       async createComment() {
         logger.log(comment.value)
         await commentsService.createComment(comment.value)
@@ -93,7 +131,9 @@ export default {
       comment,
       activeEvent: computed(() => AppState.activeEvent),
       comments: computed(() => AppState.comments),
-      account: computed(() => AppState.account)
+      account: computed(() => AppState.account),
+      alreadyAttending: computed(() => AppState.alreadyAttending)
+
     }
   }
 }
@@ -107,5 +147,11 @@ export default {
 }
 .red {
   color: red;
+}
+.pic {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 </style>
