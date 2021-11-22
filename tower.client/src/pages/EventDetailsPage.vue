@@ -43,7 +43,8 @@
       v-if="
         !activeEvent.isCanceled &&
         activeEvent.capacity >= 1 &&
-        alreadyAttending == false
+        alreadyAttending == false &&
+        account.id
       "
       @click="attendThisEvent(account.id, activeEvent.id)"
     >
@@ -58,7 +59,7 @@
 
     <button
       class="bg-success rounded ms-3"
-      v-if="activeEvent.creatorId == account.id"
+      v-if="activeEvent.creatorId == account.id && !activeEvent.isCanceled"
       data-bs-toggle="modal"
       data-bs-target="#EditEventForm"
       title="edit form"
@@ -101,7 +102,6 @@ export default {
 
     onMounted(async () => {
       try {
-        // if (AppState.attendees.forEach(a => a.account.id == AppState.account.id)) alreadyAttending = !alreadyAttending
         if (route.params.id) {
           await attendeesService.getEventAttendees(route.params.id)
           await commentsService.getEventComments(route.params.id)
