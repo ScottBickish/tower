@@ -129,9 +129,11 @@ export default {
         }
       },
       attendees: computed(() => AppState.attendees),
+
       async createComment() {
         await commentsService.createComment(comment.value)
-        comment.value = {}
+        // form.reset()
+        comment.value = { eventId: route.params.id }
       },
       async cancelEvent(event) {
         try {
