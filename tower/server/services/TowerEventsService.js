@@ -31,7 +31,7 @@ class TowerEventsService {
 
   async capacitydown(id) {
     const update = await dbContext.TowerEvent.findById(id)
-    update.cpacity++
+    update.capacity++
     const updated = await dbContext.TowerEvent.findByIdAndUpdate(id, update, { new: true })
     return updated
   }

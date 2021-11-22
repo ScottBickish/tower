@@ -1,18 +1,19 @@
 import { dbContext } from '../db/DbContext'
 import { BadRequest, Forbidden } from '../utils/Errors'
-import { logger } from '../utils/Logger'
+// import { logger } from '../utils/Logger'
 import { towerEventsService } from './TowerEventsService'
 import { commentsService } from './CommentsService'
 
 class AttendeesService {
   async attendEvent(body) {
+    // body is a new attendee it has eventId and accountId
     const attend = await dbContext.Attendee.create(body)
+    // populate adds the account properties and the event properties to the body when it gets sent back to the client
     await attend.populate('account event')
+    // sent to update the events capacity by reducing it by one
+    await towerEventsService.capacity(body.eventId)
+    // stretch goal can add an icon if attending an event
 
-    const theEvent = await towerEventsService.capacity(body.eventId)
-    await commentsService.isAttending(body.eventId, true)
-
-    theEvent.capacity--
     return attend
   }
 
@@ -40,10 +41,8 @@ class AttendeesService {
   }
 
   async getMyAttendance(query = {}) {
-    const myAttendance = await dbContext.TowerEvent.find(query).populate('account', 'name picture')
-    if (!myAttendance) {
-      throw new BadRequest('invalid id')
-    }
+    const myAttendance = await dbContext.Attendee.find(query).populate('event', 'name picture')
+
     return myAttendance
   }
 }

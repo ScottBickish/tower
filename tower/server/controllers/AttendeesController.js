@@ -4,13 +4,13 @@ import BaseController from '../utils/BaseController'
 
 export class AttendeesController extends BaseController {
   constructor() {
-    super('/api')
+    super('')
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
-      .post('/attendees', this.attendEvent)
-      .delete('/:attendeeId', this.removeAttendee)
-      .get('/attendees', this.getMyAttendance)
-      .get('/events/:eventId/attendees', this.getEventAttendance)
+      .post('/api/attendees', this.attendEvent)
+      .delete('/api/attendees/:attendeeId', this.removeAttendee)
+      .get('/account/attendees', this.getMyAttendance)
+      .get('/api/events/:eventId/attendees', this.getEventAttendance)
   }
 
   // FIXME i cant figure this out passing 4/5 capacity not updating
