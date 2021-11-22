@@ -7,6 +7,7 @@
         name="title"
         id="title"
         placeholder="title..."
+        required
         v-model="event.name"
       />
       <select v-model="event.type">
@@ -22,6 +23,7 @@
         cols="30"
         rows="10"
         placeholder="event description..."
+        required
         v-model="event.description"
       ></textarea>
       <input
@@ -30,6 +32,7 @@
         name="location"
         id="location"
         placeholder="event location"
+        required
         v-model="event.location"
       />
       <input
@@ -37,6 +40,7 @@
         name="capacity"
         id="capacity"
         class="form-control my-2"
+        required
         v-model="event.capacity"
       />
       <input
@@ -44,6 +48,7 @@
         name="date"
         id="date"
         class="form-control my-2"
+        required
         v-model="event.startDate"
       />
       <input
@@ -52,6 +57,7 @@
         id="coverimg"
         class="form-control my-2"
         placeholder="coverimg..."
+        required
         v-model="event.coverImg"
       />
       <button type="submit">submit</button>
@@ -82,7 +88,7 @@ export default {
           await eventsService.createEvent(event.value)
           Modal.getOrCreateInstance(document.getElementById("EventForm")).hide();
           router.push({ name: 'EventDetailsPage', params: { id: AppState.activeEvent.id } })
-          event.value = {};
+
         } catch (error) {
           logger.error(error)
           Pop.toast(error)

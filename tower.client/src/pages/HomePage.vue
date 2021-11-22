@@ -1,4 +1,10 @@
 <template>
+  <div>
+    <button class="m-2 rounded">Sport</button>
+    <button class="m-2 rounded">Digital</button>
+    <button class="m-2 rounded">Convention</button>
+    <button class="m-2 rounded">Concert</button>
+  </div>
   <div class="row container-fluid">
     <div class="col col-md-4" v-for="event in events" :key="event.id">
       <SingleEvent :event="event" />

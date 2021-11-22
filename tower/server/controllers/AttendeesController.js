@@ -26,8 +26,8 @@ export class AttendeesController extends BaseController {
 
   async getMyAttendance(req, res, next) {
     try {
-      const query = req.query
-      const attendance = await attendeesService.getMyAttendance(query)
+      const accountId = req.userInfo.id
+      const attendance = await attendeesService.getMyAttendance({ accountId: accountId })
       return res.send(attendance)
     } catch (error) {
       next(error)
@@ -36,10 +36,8 @@ export class AttendeesController extends BaseController {
 
   async getEventAttendance(req, res, next) {
     try {
-      req.body.eventId = req.params.eventId
-      req.body.creatorId = req.userInfo.id
-      const attendance = await attendeesService.getMyAttendance({ eventId: req.body.eventId })
-      return res.send(attendance)
+      const events = await attendeesService.getEventAttendance({ eventId: req.params.eventId })
+      return res.send(events)
     } catch (error) {
       next(error)
     }

@@ -19,6 +19,23 @@ class TowerEventsService {
     return Event
   }
 
+  async capacity(id) {
+    const update = await dbContext.TowerEvent.findById(id)
+    if (update.capacity <= 0) {
+      throw new BadRequest('its full')
+    }
+    update.capacity--
+    const updated = await dbContext.TowerEvent.findByIdAndUpdate(id, update, { new: true })
+    return updated
+  }
+
+  async capacitydown(id) {
+    const update = await dbContext.TowerEvent.findById(id)
+    update.cpacity++
+    const updated = await dbContext.TowerEvent.findByIdAndUpdate(id, update, { new: true })
+    return updated
+  }
+
   async editEvent(body) {
     const Event = await this.getEventById({ _id: body.id })
     if (Event.creatorId.toString() !== body.creatorId) {
@@ -30,9 +47,9 @@ class TowerEventsService {
     return newEvent
   }
 
-  async cancelEvent(id, body, update) {
-    const Event = await this.getEventById({ _id: body.id })
-    if (Event.creatorId.toString() !== body.creatorId) {
+  async cancelEvent(id, update) {
+    const Event = await this.getEventById(id)
+    if (Event.creatorId.toString() !== update.creatorId) {
       throw new Forbidden('na')
     }
     const newEvent = await dbContext.TowerEvent.findByIdAndUpdate(id, update, { new: true })
