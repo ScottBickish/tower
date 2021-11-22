@@ -1,8 +1,9 @@
 <template>
-  <div class="about text-center">
-    <h1>Welcome {{ account.name }}</h1>
-    <img class="rounded" :src="account.picture" alt="" />
-    <p>{{ account.email }}</p>
+  <div class="row container-fluid justify-content-center">
+    <div class="col col-md-6">
+      <h1>Welcome {{ account.name }}</h1>
+      <h4>Here are the events you are attending</h4>
+    </div>
   </div>
 </template>
 
@@ -20,7 +21,9 @@ export default {
 </script>
 
 <style scoped>
-img {
-  max-width: 100px;
+.pic {
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
 }
 </style>

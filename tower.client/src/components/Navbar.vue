@@ -1,7 +1,19 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column align-items-center" title="Go-Home">
+      <div
+        class="
+          d-flex
+          flex-column
+          align-items-center
+          btn
+          text-light
+          lighten-30
+          selectable
+          text-uppercase
+        "
+        title="Go-Home"
+      >
         Home
       </div>
     </router-link>
@@ -22,6 +34,7 @@
           <router-link
             :to="{ name: 'Account' }"
             class="btn text-light lighten-30 selectable text-uppercase"
+            title="Go to Account Page"
             >Account
           </router-link>
         </li>

@@ -26,6 +26,18 @@ class EventsService{
     AppState.events = AppState.events.filter(e => e.id !== AppState.events.id)
     this.getActiveEvent(event.id)
   }
+  async editEvent(event){
+    debugger
+    const res = await api.put(`api/events/${event.id}`, event)
+    const newEvent = res.data
+    AppState.activeEvent = newEvent
+    const index = AppState.events.findIndex(e => e.id === newEvent.id)
+    if(index === -1){
+      AppState.events.push(newEvent)
+      return
+    }
+    AppState.events.splice(index, 1, newEvent)
+  }
 
 }
 

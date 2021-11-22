@@ -49,6 +49,22 @@
     >
       Attend
     </button>
+
+    <Modal id="EditEventForm">
+      <template #modal-title> Edit Your Event! </template>
+
+      <template #modal-body> <EditEventForm :event="activeEvent" /> </template>
+    </Modal>
+
+    <button
+      class="bg-success rounded ms-3"
+      v-if="activeEvent.creatorId == account.id"
+      data-bs-toggle="modal"
+      data-bs-target="#EditEventForm"
+      title="edit form"
+    >
+      Edit Your Event
+    </button>
   </div>
   <form @submit.prevent="createComment()">
     <input
@@ -65,7 +81,6 @@
   <div class="col col-md 10" v-for="comment in comments" :key="comment.id">
     <SingleComment :comment="comment" />
   </div>
-  <!-- {{ comments }} -->
 </template>
 
 
@@ -99,12 +114,7 @@ export default {
         Pop.toast(error)
       }
     })
-    // alreadyAttending() {
-    //   if (AppState.attendees.forEach(a => a.account.id == AppState.account.id)) {
-    //     alreadyAttending = !alreadyAttending
-    //   }
 
-    // }
     return {
 
       async attendThisEvent(accountId, eventId) {
