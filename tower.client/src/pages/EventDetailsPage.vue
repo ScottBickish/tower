@@ -4,12 +4,15 @@
       <div class="col-md-10 ms-3">
         <img class="img-fluid" :src="activeEvent.coverImg" alt="" />
         <h3>Event name: {{ activeEvent.name }}</h3>
+        <p v-if="alreadyAttending == true" class="color">
+          You are Attending this event
+        </p>
         <h5>Event type: {{ activeEvent.type }}</h5>
         <h5>
           Start date: {{ new Date(activeEvent.startDate).toDateString() }}
         </h5>
         <h5>Location: {{ activeEvent.location }}</h5>
-        <p>Capacity left{{ activeEvent.capacity }}</p>
+        <p>Capacity left {{ activeEvent.capacity }}</p>
         <p>{{ activeEvent.description }}</p>
         <div v-if="activeEvent.isCanceled">
           <h6 class="cancel red">This event is canceled</h6>
@@ -17,7 +20,7 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row container-fluid">
     <div class="col-md-1" v-for="attendee in attendees" :key="attendee.id">
       <img
         class="pic"
@@ -83,7 +86,7 @@ export default {
 
     onMounted(async () => {
       try {
-        if (AppState.attendees.forEach(a => a.account.id == AppState.account.id)) alreadyAttending = !alreadyAttending
+        // if (AppState.attendees.forEach(a => a.account.id == AppState.account.id)) alreadyAttending = !alreadyAttending
         if (route.params.id) {
           await attendeesService.getEventAttendees(route.params.id)
           await commentsService.getEventComments(route.params.id)
@@ -106,7 +109,10 @@ export default {
 
       async attendThisEvent(accountId, eventId) {
         try {
-          await attendeesService.attendThisEvent(accountId, eventId)
+          if (await window.confirm('you want to attend this event?')) {
+            await attendeesService.attendThisEvent(accountId, eventId)
+
+          }
         } catch (error) {
           logger.error(error)
           Pop.toast(error)
@@ -132,7 +138,13 @@ export default {
       activeEvent: computed(() => AppState.activeEvent),
       comments: computed(() => AppState.comments),
       account: computed(() => AppState.account),
-      alreadyAttending: computed(() => AppState.alreadyAttending)
+      alreadyAttending: computed(() => {
+        if (AppState.account.id) {
+          let found = AppState.attendees.find(a => a.accountId === AppState.account.id)
+          return found ? true : false
+        }
+        return false
+      })
 
     }
   }
@@ -147,6 +159,9 @@ export default {
 }
 .red {
   color: red;
+}
+.color {
+  color: purple;
 }
 .pic {
   height: 50px;

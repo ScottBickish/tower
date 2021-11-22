@@ -1,15 +1,20 @@
 import { Auth0Provider } from '@bcwdev/auth0provider'
 import { towerEventsService } from '../services/TowerEventsService'
 import BaseController from '../utils/BaseController'
+import { attendeesService } from '../services/AttendeesService'
+import { commentsService } from '../services/CommentsService'
 
 export class TowerEventsController extends BaseController {
   constructor() {
     super('/api/events')
     this.router
-      // .use(Auth0Provider.getAuthorizedUserInfo)
-      .post('', this.createEvent)
       .get('', this.getAllEvents)
       .get('/:eventId', this.getEventById)
+      .get('/:eventId/comments', this.getCommentsByEvent)
+
+      .get('/:eventId/attendees', this.getEventAttendance)
+      .use(Auth0Provider.getAuthorizedUserInfo)
+      .post('', this.createEvent)
       .put('/:eventId', this.editEvent)
       .delete('/:eventId', this.cancelEvent)
   }
@@ -19,6 +24,24 @@ export class TowerEventsController extends BaseController {
       req.body.creatorId = req.userInfo.id
       const Event = await towerEventsService.createEvent(req.body)
       res.send(Event)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getCommentsByEvent(req, res, next) {
+    try {
+      const comment = await commentsService.getCommentsByEvent(req.params.eventId)
+      return res.send(comment)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async getEventAttendance(req, res, next) {
+    try {
+      const events = await attendeesService.getEventAttendance({ eventId: req.params.eventId })
+      return res.send(events)
     } catch (error) {
       next(error)
     }

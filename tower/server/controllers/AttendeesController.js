@@ -4,40 +4,19 @@ import BaseController from '../utils/BaseController'
 
 export class AttendeesController extends BaseController {
   constructor() {
-    super('')
+    super('/api/attendees')
     this.router
+
       .use(Auth0Provider.getAuthorizedUserInfo)
-      .post('/api/attendees', this.attendEvent)
-      .delete('/api/attendees/:attendeeId', this.removeAttendee)
-      .get('/account/attendees', this.getMyAttendance)
-      .get('/api/events/:eventId/attendees', this.getEventAttendance)
+      .post('', this.attendEvent)
+      .delete('/:attendeeId', this.removeAttendee)
   }
 
-  // FIXME i cant figure this out passing 4/5 capacity not updating
   async attendEvent(req, res, next) {
     try {
       req.body.accountId = req.userInfo.id
       const attended = await attendeesService.attendEvent(req.body)
       return res.send(attended)
-    } catch (error) {
-      next(error)
-    }
-  }
-
-  async getMyAttendance(req, res, next) {
-    try {
-      const accountId = req.userInfo.id
-      const attendance = await attendeesService.getMyAttendance({ accountId: accountId })
-      return res.send(attendance)
-    } catch (error) {
-      next(error)
-    }
-  }
-
-  async getEventAttendance(req, res, next) {
-    try {
-      const events = await attendeesService.getEventAttendance({ eventId: req.params.eventId })
-      return res.send(events)
     } catch (error) {
       next(error)
     }

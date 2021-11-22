@@ -20,13 +20,22 @@
       <ul class="navbar-nav me-auto">
         <li>
           <router-link
-            :to="{ name: 'About' }"
-            class="btn text-success lighten-30 selectable text-uppercase"
-          >
+            :to="{ name: 'Account' }"
+            class="btn text-light lighten-30 selectable text-uppercase"
+            >Account
           </router-link>
         </li>
       </ul>
       <span class="navbar-text">
+        <button
+          v-if="account.id"
+          class="btn-btn rounded bg-success"
+          data-bs-toggle="modal"
+          data-bs-target="#EventForm"
+          title="form"
+        >
+          Create
+        </button>
         <button
           class="
             btn
@@ -78,15 +87,6 @@
               <i class="mdi mdi-logout"></i>
               logout
             </div>
-            <button
-              v-if="account.id"
-              class="btn-btn rounded bg-success"
-              data-bs-toggle="modal"
-              data-bs-target="#EventForm"
-              title="form"
-            >
-              Create
-            </button>
           </div>
         </div>
       </span>
