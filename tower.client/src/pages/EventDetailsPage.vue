@@ -1,7 +1,7 @@
 <template>
   <div class="active event page">
-    <div class="row container-fluid">
-      <div class="col-md-10 ms-3">
+    <div class="row container-fluid justify-content-center">
+      <div class="col-md-10 m-3">
         <img class="img-fluid" :src="activeEvent.coverImg" alt="" />
         <h3>Event name: {{ activeEvent.name }}</h3>
         <p v-if="alreadyAttending == true" class="color">
@@ -12,10 +12,13 @@
           Start date: {{ new Date(activeEvent.startDate).toDateString() }}
         </h5>
         <h5>Location: {{ activeEvent.location }}</h5>
-        <p>Capacity left {{ activeEvent.capacity }}</p>
+        <p v-if="activeEvent.capacity > 0">
+          Capacity left {{ activeEvent.capacity }}
+        </p>
+        <p v-if="activeEvent.capacity == 0" class="red">This event if full</p>
         <p>{{ activeEvent.description }}</p>
         <div v-if="activeEvent.isCanceled">
-          <h6 class="cancel red">This event is canceled</h6>
+          <h6 class="red">This event is canceled</h6>
         </div>
       </div>
     </div>
@@ -153,6 +156,7 @@ export default {
       },
       route,
       comment,
+      alreadyAttending: computed(() => AppState.alreadyAttending),
       activeEvent: computed(() => AppState.activeEvent),
       comments: computed(() => AppState.comments),
       account: computed(() => AppState.account),
@@ -176,7 +180,7 @@ export default {
   width: 380px;
 }
 .red {
-  color: red;
+  color: rgb(187, 8, 8);
 }
 .color {
   color: purple;

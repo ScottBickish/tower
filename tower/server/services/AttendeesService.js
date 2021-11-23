@@ -41,7 +41,7 @@ class AttendeesService {
   }
 
   async getMyAttendance(query = {}) {
-    const myAttendance = await dbContext.Attendee.find(query).populate('event', 'name picture')
+    const myAttendance = await dbContext.Attendee.find(query).populate('event')
 
     return myAttendance
   }

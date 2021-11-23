@@ -1,17 +1,26 @@
 <template>
-  <div>
-    <button class="m-2 rounded" @click="sort = 'sport'">Sport</button>
-    <button class="m-2 rounded" @click="sort = 'digital'">Digital</button>
-    <button class="m-2 rounded" @click="sort = 'convention'">Convention</button>
-    <button class="m-2 rounded" @click="sort = 'concert'">Concert</button>
+  <div class="ms-2">
+    <span> <b> Filter by: </b></span>
+    <button class="m-2 rounded bg-primary" @click="sort = 'sport'">
+      Sport
+    </button>
+    <button class="m-2 rounded bg-primary" @click="sort = 'digital'">
+      Digital
+    </button>
+    <button class="m-2 rounded bg-primary" @click="sort = 'convention'">
+      Convention
+    </button>
+    <button class="m-2 rounded bg-primary" @click="sort = 'concert'">
+      Concert
+    </button>
   </div>
   <div class="row container-fluid" v-if="sort.length > 0">
-    <div class="col col-md-4" v-for="event in events" :key="event.id">
+    <div class="col-12 col-md-4" v-for="event in events" :key="event.id">
       <SingleEvent :event="event" />
     </div>
   </div>
   <div v-else class="row container-fluid">
-    <div class="col col-md-4" v-for="event in allEvents" :key="event.id">
+    <div class="col-12 col-md-4" v-for="event in allEvents" :key="event.id">
       <SingleEvent :event="event" />
     </div>
   </div>
