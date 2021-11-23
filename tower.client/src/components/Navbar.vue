@@ -50,6 +50,7 @@
       </button>
       <span class="navbar-text">
         <button
+          title="login"
           class="
             btn
             selectable
@@ -85,11 +86,15 @@
             aria-labelledby="authDropdown"
           >
             <router-link :to="{ name: 'Account' }">
-              <div class="list-group-item list-group-item-action hoverable">
+              <div
+                class="list-group-item list-group-item-action hoverable"
+                title="manage account"
+              >
                 Manage Account
               </div>
             </router-link>
             <div
+              title="logout"
               class="
                 list-group-item list-group-item-action
                 hoverable

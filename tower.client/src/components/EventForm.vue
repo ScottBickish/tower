@@ -10,7 +10,8 @@
         required
         v-model="event.name"
       />
-      <select v-model="event.type">
+      <label class="me-2"> Select a type of Event </label>
+      <select v-model="event.type" title="select a type" class="selectable">
         <option>concert</option>
         <option>digital</option>
         <option>convention</option>
@@ -41,13 +42,15 @@
         id="capacity"
         class="form-control my-2"
         required
+        placeholder="Capacity use the arrows..."
         v-model="event.capacity"
       />
       <input
+        title="pick a date"
         type="date"
         name="date"
         id="date"
-        class="form-control my-2"
+        class="form-control my-2 selectable"
         required
         v-model="event.startDate"
       />
@@ -60,7 +63,7 @@
         required
         v-model="event.coverImg"
       />
-      <button type="submit">submit</button>
+      <button type="submit" title="submit">submit</button>
     </form>
   </div>
 </template>

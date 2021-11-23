@@ -1,6 +1,10 @@
 <template>
   <router-link :to="{ name: 'EventDetailsPage', params: { id: event.id } }">
-    <div class="selectable card elevation-2 my-2" @click="setActive()">
+    <div
+      title="open in new page"
+      class="selectable card elevation-2 my-2"
+      @click="setActive()"
+    >
       <img class="img-fluid fix" :src="event.coverImg" alt="" />
       <h3>{{ event.name }}</h3>
       <!-- <p v-if="alreadyAttending == true" class="color">

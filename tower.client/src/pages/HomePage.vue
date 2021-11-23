@@ -1,16 +1,32 @@
 <template>
   <div class="ms-2">
     <span> <b> Filter by: </b></span>
-    <button class="m-2 rounded bg-primary" @click="sort = 'sport'">
+    <button
+      title="sort by sport"
+      class="m-2 rounded bg-primary"
+      @click="sort = 'sport'"
+    >
       Sport
     </button>
-    <button class="m-2 rounded bg-primary" @click="sort = 'digital'">
+    <button
+      title="sort by digital"
+      class="m-2 rounded bg-primary"
+      @click="sort = 'digital'"
+    >
       Digital
     </button>
-    <button class="m-2 rounded bg-primary" @click="sort = 'convention'">
+    <button
+      title="sort by convention"
+      class="m-2 rounded bg-primary"
+      @click="sort = 'convention'"
+    >
       Convention
     </button>
-    <button class="m-2 rounded bg-primary" @click="sort = 'concert'">
+    <button
+      title="sort by concert"
+      class="m-2 rounded bg-primary"
+      @click="sort = 'concert'"
+    >
       Concert
     </button>
   </div>

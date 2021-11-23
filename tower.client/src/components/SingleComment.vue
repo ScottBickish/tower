@@ -6,6 +6,7 @@
     <p>{{ comment.body }}</p>
     <div class="text-end m-3">
       <button
+        title="delete comment"
         class="bg-danger rounded"
         v-if="account.id == comment.creator.id"
         @click="removeComment(comment.id)"

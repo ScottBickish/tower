@@ -13,7 +13,7 @@
         </h5>
         <h5>Location: {{ activeEvent.location }}</h5>
         <p v-if="activeEvent.capacity > 0">
-          Capacity left {{ activeEvent.capacity }}
+          Capacity left: {{ activeEvent.capacity }}
         </p>
         <p v-if="activeEvent.capacity == 0" class="red">This event if full</p>
         <p>{{ activeEvent.description }}</p>
@@ -24,7 +24,11 @@
     </div>
   </div>
   <div class="row container-fluid">
-    <div class="col-md-1" v-for="attendee in attendees" :key="attendee.id">
+    <div
+      class="col-12 col-md-1"
+      v-for="attendee in attendees"
+      :key="attendee.id"
+    >
       <img
         class="pic"
         :src="attendee.account.picture"
@@ -35,6 +39,7 @@
   </div>
   <div class="text-end m-3">
     <button
+      title="cancel event"
       class="bg-danger rounded"
       v-if="
         activeEvent.creatorId == account.id &&
@@ -46,6 +51,7 @@
       Cancel Event
     </button>
     <button
+      title="attend"
       class="bg-warning rounded ms-3"
       v-if="
         !activeEvent.isCanceled &&
@@ -78,18 +84,24 @@
       Edit Your Event
     </button>
   </div>
-  <form @submit.prevent="createComment()">
-    <input
-      type="text"
-      class="form-control"
-      placeholder="type comment here..."
-      name="comment"
-      id="comment"
-      required
-      v-model="comment.body"
-    />
-    <button class="rounded bg-success m-2 px-3" type="submit">Post</button>
-  </form>
+  <div class="row container-fluid justify-content-center">
+    <div class="col-12 col-md-10">
+      <form @submit.prevent="createComment()">
+        <input
+          type="text"
+          class="form-control px-2"
+          placeholder="type comment here..."
+          name="comment"
+          id="comment"
+          required
+          v-model="comment.body"
+        />
+        <button class="rounded bg-success m-2 px-3" type="submit" title="post">
+          Post
+        </button>
+      </form>
+    </div>
+  </div>
   <div class="col col-md 10" v-for="comment in comments" :key="comment.id">
     <SingleComment :comment="comment" />
   </div>
@@ -190,5 +202,8 @@ export default {
   width: 50px;
   border-radius: 50%;
   object-fit: cover;
+}
+.yes {
+  display: inline;
 }
 </style>

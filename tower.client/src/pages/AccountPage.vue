@@ -6,9 +6,9 @@
   </div>
   <!-- </div> -->
 
-  <div class="row container-fluid">
+  <div class="row container-fluid justify-content-center">
     <div
-      class="col-12 col-md-4 card elevation-2 my-2"
+      class="col-12 col-md-5 card elevation-2 m-3"
       v-for="attendee in myAttendance"
       :key="attendee.id"
     >
@@ -28,7 +28,11 @@
       <div v-if="attendee.event.isCanceled">
         <h6 class="cancel">This event is canceled</h6>
       </div>
-      <button class="rounded" @click="returnTicket(attendee.id)">
+      <button
+        class="rounded m-2 bg-danger"
+        title="return your ticket"
+        @click="returnTicket(attendee.id)"
+      >
         Return Ticket
       </button>
     </div>
