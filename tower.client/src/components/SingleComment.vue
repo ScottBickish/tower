@@ -1,17 +1,18 @@
 <template>
-  <div class="card elevation-2 border mb-2"></div>
-  <img class="fit" :src="comment.creator.picture" alt="" />
-  <p>{{ comment.creator.name }}</p>
+  <div class="card elevation-2 border m-3 p-2">
+    <img class="fit" :src="comment.creator.picture" alt="" />
+    <p>{{ comment.creator.name }}</p>
 
-  <p>{{ comment.body }}</p>
-  <div class="text-end m-3">
-    <button
-      class="bg-danger rounded"
-      v-if="account.id == comment.creator.id"
-      @click="removeComment(comment.id)"
-    >
-      Delete
-    </button>
+    <p>{{ comment.body }}</p>
+    <div class="text-end m-3">
+      <button
+        class="bg-danger rounded"
+        v-if="account.id == comment.creator.id"
+        @click="removeComment(comment.id)"
+      >
+        Delete
+      </button>
+    </div>
   </div>
 </template>
 

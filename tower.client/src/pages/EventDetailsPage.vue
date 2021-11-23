@@ -33,7 +33,11 @@
   <div class="text-end m-3">
     <button
       class="bg-danger rounded"
-      v-if="activeEvent.creatorId == account.id && !activeEvent.isCanceled"
+      v-if="
+        activeEvent.creatorId == account.id &&
+        !activeEvent.isCanceled &&
+        account.id
+      "
       @click="cancelEvent(activeEvent)"
     >
       Cancel Event
@@ -59,7 +63,11 @@
 
     <button
       class="bg-success rounded ms-3"
-      v-if="activeEvent.creatorId == account.id && !activeEvent.isCanceled"
+      v-if="
+        activeEvent.creatorId == account.id &&
+        !activeEvent.isCanceled &&
+        account.id
+      "
       data-bs-toggle="modal"
       data-bs-target="#EditEventForm"
       title="edit form"
@@ -132,7 +140,6 @@ export default {
 
       async createComment() {
         await commentsService.createComment(comment.value)
-        // form.reset()
         comment.value = { eventId: route.params.id }
       },
       async cancelEvent(event) {
