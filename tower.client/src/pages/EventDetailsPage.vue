@@ -88,7 +88,7 @@
       required
       v-model="comment.body"
     />
-    <button class="rounded bg-success" type="submit">Post</button>
+    <button class="rounded bg-success m-2 px-3" type="submit">Post</button>
   </form>
   <div class="col col-md 10" v-for="comment in comments" :key="comment.id">
     <SingleComment :comment="comment" />
